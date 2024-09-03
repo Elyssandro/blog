@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Post</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Fundo preto */
+            color: #fff; /* Texto branco */
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            border-bottom: 2px solid #ffc400; /* Linha vermelha abaixo do header */
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #a0d8ff; /* Azul claro */
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav ul li a:hover {
+            color: #ffc400; /* Vermelho ao passar o mouse */
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        article {
+            background-color: #1a1a1a; /* Fundo cinza escuro */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            border-left: 5px solid #a0d8ff; /* Borda azul claro */
+        }
+        article h2 {
+            color: #a0d8ff; /* Azul claro */
+        }
+        article p {
+            color: #fff; /* Texto branco */
+        }
+        .back-btn {
+            background-color: #a0d8ff;
+            color: #000;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .back-btn:hover {
+            background-color: #ffc400;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+            border-top: 2px solid #ffc400; /* Linha vermelha acima do footer */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Detalhes do Post</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="publicar.html">Publicar</a></li>
+                    <li><a href="recentes.html">Recentes</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" id="post-details">
+        <!-- Detalhes do post serão carregados aqui -->
+    </div>
+
+    <footer>
+        <p>ELYSSANDRO &copy; 2024</p>
+    </footer>
+
+    <script>
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        function loadPostDetails() {
+            const index = getQueryParameter('index');
+            if (index === null) return;
+
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            const post = posts[index];
+
+            if (post) {
+                const postDetailsContainer = document.getElementById('post-details');
+                postDetailsContainer.innerHTML = `
+                    <article>
+                        <h2>${post.title}</h2>
+                        <p>Publicado em ${post.date}</p>
+                        <p>${post.content}</p>
+                        <a href="recentes.html" class="back-btn">Voltar</a>
+                    </article>
+                `;
+            }
+        }
+
+        // Carrega os detalhes do post ao abrir a página
+        loadPostDetails();
+    </script>
+</body>
+</html>
