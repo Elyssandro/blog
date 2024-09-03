@@ -124,13 +124,13 @@
 
                 const viewBtn = document.createElement('a');
                 viewBtn.textContent = 'Ver mais';
-                viewBtn.href = `detalhes.html?index=${index}`;
+                viewBtn.href = `detalhes.html?index=${posts.length - 1 - index}`; // Passa o índice correto
                 viewBtn.className = 'view-btn'; // Estilo para o botão "Ver mais"
 
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = 'Apagar';
                 deleteBtn.className = 'delete-btn';
-                deleteBtn.onclick = () => deletePost(index);
+                deleteBtn.onclick = () => deletePost(posts.length - 1 - index);
 
                 article.appendChild(title);
                 article.appendChild(date);
