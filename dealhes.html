@@ -17,7 +17,7 @@
             color: #fff;
             padding: 10px 0;
             text-align: center;
-            border-bottom: 2px solid #ffc400; /* Linha vermelha abaixo do header */
+            border-bottom: 2px solid #ffc400; /* Linha laranja abaixo do header */
         }
         nav ul {
             list-style: none;
@@ -35,7 +35,7 @@
             font-weight: bold;
         }
         nav ul li a:hover {
-            color: #ffc400; /* Vermelho ao passar o mouse */
+            color: #ffc400; /* Laranja ao passar o mouse */
         }
         .container {
             width: 80%;
@@ -45,6 +45,7 @@
         }
         article {
             background-color: #1a1a1a; /* Fundo cinza escuro */
+            margin-top: 20px;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
@@ -56,25 +57,13 @@
         article p {
             color: #fff; /* Texto branco */
         }
-        .back-btn {
-            background-color: #a0d8ff;
-            color: #000;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-        .back-btn:hover {
-            background-color: #ffc400;
-        }
         footer {
             background-color: #333;
             color: #fff;
             text-align: center;
             padding: 10px 0;
             margin-top: 20px;
-            border-top: 2px solid #ffc400; /* Linha vermelha acima do footer */
+            border-top: 2px solid #ffc400; /* Linha laranja acima do footer */
         }
     </style>
 </head>
@@ -93,7 +82,7 @@
     </header>
 
     <div class="container" id="post-details">
-        <!-- Detalhes do post serão carregados aqui -->
+        <!-- Os detalhes do post serão carregados aqui -->
     </div>
 
     <footer>
@@ -101,29 +90,34 @@
     </footer>
 
     <script>
-        function getQueryParameter(name) {
+        function getQueryParam(name) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(name);
         }
 
         function loadPostDetails() {
-            const index = getQueryParameter('index');
-            if (index === null) return;
+            const postIndex = getQueryParam('index');
+            if (postIndex === null) {
+                document.getElementById('post-details').innerHTML = '<p>Post não encontrado.</p>';
+                return;
+            }
 
             const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            const post = posts[index];
+            const post = posts[postIndex];
 
-            if (post) {
-                const postDetailsContainer = document.getElementById('post-details');
-                postDetailsContainer.innerHTML = `
-                    <article>
-                        <h2>${post.title}</h2>
-                        <p>Publicado em ${post.date}</p>
-                        <p>${post.content}</p>
-                        <a href="recentes.html" class="back-btn">Voltar</a>
-                    </article>
-                `;
+            if (!post) {
+                document.getElementById('post-details').innerHTML = '<p>Post não encontrado.</p>';
+                return;
             }
+
+            const container = document.getElementById('post-details');
+            container.innerHTML = `
+                <article>
+                    <h2>${post.title}</h2>
+                    <p>Publicado em ${post.date}</p>
+                    <p>${post.content}</p>
+                </article>
+            `;
         }
 
         // Carrega os detalhes do post ao abrir a página
