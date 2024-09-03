@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar Novo Post</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Fundo preto */
+            color: #fff; /* Texto branco */
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            border-bottom: 2px solid #ffc400; /* Linha vermelha abaixo do header */
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #00f0ff; /* Azul claro */
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav ul li a:hover {
+            color: #ffc400; /* Vermelho ao passar o mouse */
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        form {
+            background-color: #1a1a1a; /* Fundo cinza escuro */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            border-left: 5px solid #a0d8ff; /* Borda azul claro */
+        }
+        form input, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+        }
+        form input[type="submit"] {
+            background-color: #a0d8ff;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+        form input[type="submit"]:hover {
+            background-color: #ffc400;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Publicar Novo Post</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="publicar.html">Publicar</a></li> <!-- Link para a página Publicar -->
+                    <li><a href="recentes.html">Recentes</a></li> <!-- Link para a página Recentes -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <form id="postForm">
+            <label for="titulo">Título do Post:</label>
+            <input type="text" id="titulo" name="titulo" placeholder="Digite o título aqui..." required>
+
+            <label for="conteudo">Conteúdo do Post:</label>
+            <textarea id="conteudo" name="conteudo" rows="10" placeholder="Digite o conteúdo aqui..." required></textarea>
+
+            <input type="submit" value="Publicar">
+        </form>
+    </div>
+
+    <footer>
+        <p>Meu Blog &copy; 2024</p>
+    </footer>
+
+    <script>
+        document.getElementById('postForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('titulo').value;
+            const content = document.getElementById('conteudo').value;
+            const date = new Date().toLocaleDateString();
+
+            const post = { title, content, date };
+
+            let posts = JSON.parse(localStorage.getItem('posts')) || [];
+            posts.push(post);
+            localStorage.setItem('posts', JSON.stringify(posts));
+
+            alert('Post publicado com sucesso!');
+            window.location.href = 'index.html'; // Redireciona para a página principal
+        });
+    </script>
+</body>
+</html>

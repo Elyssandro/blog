@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELYSSANDRO</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Fundo preto */
+            color: #fff; /* Texto branco */
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            border-bottom: 2px solid #ffc400; /* Linha vermelha abaixo do header */
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #a0d8ff; /* Azul claro */
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav ul li a:hover {
+            color: #ffc400; /* Vermelho ao passar o mouse */
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        article {
+            background-color: #1a1a1a; /* Fundo cinza escuro */
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            border-left: 5px solid #a0d8ff; /* Borda azul claro */
+            position: relative;
+        }
+        article h2 {
+            color: #a0d8ff; /* Azul claro */
+        }
+        article p {
+            color: #fff; /* Texto branco */
+        }
+        .delete-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #ffc400;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .delete-btn:hover {
+            background-color: #ffc400;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+            border-top: 2px solid #ffc400; /* Linha vermelha acima do footer */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ELYSSANDRO</h1>
+            <p>ELYSSANDRO!</p>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="publicar.html">Publicar</a></li> <!-- Link para a página Publicar -->
+                    <li><a href="recentes.html">Recentes</a></li> <!-- Link para a página Recentes -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container" id="posts-container">
+        <!-- Os posts serão carregados aqui -->
+    </div>
+
+    <footer>
+        <p>Meu Blog &copy; 2024</p>
+    </footer>
+
+    <script>
+        function loadPosts() {
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = ''; // Limpa o conteúdo atual
+
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+
+            posts.forEach((post, index) => {
+                const article = document.createElement('article');
+                const title = document.createElement('h2');
+                title.textContent = post.title;
+                const date = document.createElement('p');
+                date.textContent = `Publicado em ${post.date}`;
+                const content = document.createElement('p');
+                content.textContent = post.content;
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Apagar';
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.onclick = () => deletePost(index);
+
+                article.appendChild(title);
+                article.appendChild(date);
+                article.appendChild(content);
+                article.appendChild(deleteBtn);
+
+                postsContainer.appendChild(article);
+            });
+        }
+
+        function deletePost(index) {
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            posts.splice(index, 1);
+            localStorage.setItem('posts', JSON.stringify(posts));
+            loadPosts(); // Recarrega os posts após a exclusão
+        }
+
+        // Carrega os posts ao abrir a página
+        loadPosts();
+    </script>
+</body>
+</html>
