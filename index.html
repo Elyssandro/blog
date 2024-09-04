@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ELYSSANDRO</title>
+    <link rel="manifest" href="/manifest.json"> <!-- Adiciona a referência ao manifesto -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -143,6 +144,18 @@
 
         // Carrega os posts ao abrir a página
         loadPosts();
+
+        // Registrar o Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, (error) => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
     </script>
 </body>
 </html>
