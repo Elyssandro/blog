@@ -30,7 +30,7 @@
             margin: 0 15px;
         }
         nav ul li a {
-            color: #a0d8ff; /* Azul claro */
+            color: #00f0ff; /* Azul claro */
             text-decoration: none;
             font-weight: bold;
         }
@@ -124,13 +124,17 @@
 
                 const viewBtn = document.createElement('a');
                 viewBtn.textContent = 'Ver mais';
-                viewBtn.href = `detalhes.html?index=${posts.length - 1 - index}`; // Passa o índice correto
+                viewBtn.href = `detalhes.html?index=${posts.length - 1 - recentPosts.length + index}`; // Passa o índice correto
                 viewBtn.className = 'view-btn'; // Estilo para o botão "Ver mais"
 
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = 'Apagar';
                 deleteBtn.className = 'delete-btn';
-                deleteBtn.onclick = () => deletePost(posts.length - 1 - index);
+                deleteBtn.onclick = () => {
+                    if (confirm('Tem certeza que deseja apagar este post?')) {
+                        deletePost(posts.length - 1 - recentPosts.length + index);
+                    }
+                };
 
                 article.appendChild(title);
                 article.appendChild(date);
