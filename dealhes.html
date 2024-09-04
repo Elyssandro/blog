@@ -30,7 +30,7 @@
             margin: 0 15px;
         }
         nav ul li a {
-            color: #a0d8ff; /* Azul claro */
+            color: #00f0ff; /* Azul claro */
             text-decoration: none;
             font-weight: bold;
         }
@@ -45,7 +45,6 @@
         }
         article {
             background-color: #1a1a1a; /* Fundo cinza escuro */
-            margin-top: 20px;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
@@ -82,7 +81,7 @@
     </header>
 
     <div class="container" id="post-details">
-        <!-- Os detalhes do post serão carregados aqui -->
+        <!-- Detalhes do post serão carregados aqui -->
     </div>
 
     <footer>
@@ -90,34 +89,34 @@
     </footer>
 
     <script>
-        function getQueryParam(name) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
-        }
-
         function loadPostDetails() {
-            const postIndex = getQueryParam('index');
-            if (postIndex === null) {
+            const queryParams = new URLSearchParams(window.location.search);
+            const index = parseInt(queryParams.get('index'));
+
+            if (isNaN(index)) {
                 document.getElementById('post-details').innerHTML = '<p>Post não encontrado.</p>';
                 return;
             }
 
             const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            const post = posts[postIndex];
+            const post = posts[index];
 
             if (!post) {
                 document.getElementById('post-details').innerHTML = '<p>Post não encontrado.</p>';
                 return;
             }
 
-            const container = document.getElementById('post-details');
-            container.innerHTML = `
-                <article>
-                    <h2>${post.title}</h2>
-                    <p>Publicado em ${post.date}</p>
-                    <p>${post.content}</p>
-                </article>
-            `;
+            const postDetails = document.getElementById('post-details');
+            const title = document.createElement('h2');
+            title.textContent = post.title;
+            const date = document.createElement('p');
+            date.textContent = `Publicado em ${post.date}`;
+            const content = document.createElement('p');
+            content.textContent = post.content;
+
+            postDetails.appendChild(title);
+            postDetails.appendChild(date);
+            postDetails.appendChild(content);
         }
 
         // Carrega os detalhes do post ao abrir a página
